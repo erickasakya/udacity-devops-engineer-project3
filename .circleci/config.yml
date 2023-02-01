@@ -338,7 +338,7 @@ jobs:
       - install_awscli
       - install_nodejs
       - run:
-          name: Get backend url
+          name: Backend smoke test.
           command: |
             BACKEND_PUBLIC_IP=$(aws ec2 describe-instances \
               --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
@@ -346,12 +346,9 @@ jobs:
               --output text)
 
             export API_URL=http://${BACKEND_PUBLIC_IP}:3030
-      - run:
-          name: Backend smoke test.
-          command: |
             if curl -s $API_URL/api/status | grep "ok"
             then
-                exit 0
+                exit 2
             else
                 exit 1
             fi
@@ -361,7 +358,7 @@ jobs:
             FRONTEND_WEBSITE=http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website.${AWS_DEFAULT_REGION}.amazonaws.com
             if curl -s $FRONTEND_WEBSITE | grep "Welcome"
             then
-                exit 0
+                exit 2
             else
                 exit 1
             fi
