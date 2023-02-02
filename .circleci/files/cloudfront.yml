@@ -36,3 +36,5 @@ Outputs:
   WorkflowID:
     Value: !Sub ${WorkflowID}
     Description: WorkFlow ID maching in the CircleCI Pipeline 
+    Export:
+      Name: WorkflowID
