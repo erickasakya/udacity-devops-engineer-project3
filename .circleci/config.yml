@@ -227,6 +227,11 @@ jobs:
             cd .circleci/ansible
             cat inventory.txt
             ansible-playbook -i inventory.txt configure-server.yml
+      - run:
+          name: Configure Node exporter on the server
+          command: |
+            cd .circleci/ansible
+            ansible-playbook -i inventory.txt configure-prometheus-node-exporter.yml
       - destroy-environment
 
   run-migrations:
